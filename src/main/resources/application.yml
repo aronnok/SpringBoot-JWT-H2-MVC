@@ -1,0 +1,44 @@
+server:
+  port: 55555
+spring:
+  datasource:
+    #url: jdbc:mysql://localhost:3334/spring-jwt?useSSL=false
+       url: jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+       platform: h2
+       username: sa
+       password:
+       driverClassName: org.h2.Driver
+  jpa:
+       database-platform: org.hibernate.dialect.H2Dialect
+       hibernate:
+         ddl-auto: update
+       properties:
+         hibernate:
+           show_sql: true
+           use_sql_comments: true
+           format_sql: true
+
+   ###
+   #   H2 Settings
+   ###
+  h2:
+       console:
+         enabled: true
+         path: /console
+         settings:
+           trace: false
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create-drop
+#      naming:
+##        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  #  properties:
+ #     hibernate:
+   #     dialect: org.hibernate.dialect.MySQL5Dialect
+
+#spring.datasource.url=jdbc:h2:mem:testdb
+#spring.datasource.driverClassName=org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=
+
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
