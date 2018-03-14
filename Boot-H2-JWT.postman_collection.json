@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Boot-H2-JWT",
+		"_postman_id": "15d0663b-7208-69b3-8bc3-8da5baa5bf7d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:55555/user/register",
+			"request": {
+				"url": "localhost:55555/user/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"userId\": 123,\n\t\"email\" : \"test@test.com\",\n\t\"password\": \"123\"\n\t\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:55555/user/login",
+			"request": {
+				"url": "localhost:55555/user/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n    \t\"userId\": 1,\n\t\"email\" : \"test@test.com\",\n\t\"password\": \"123\"\n\t\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:55555/secure/user/email",
+			"request": {
+				"url": "localhost:55555/secure/user/email",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpbXoubXJ6QGdtYWlsLmNvbSIsInJvbGVzIjoidXNlciIsImlhdCI6MTUyMTA1MDg0NH0.yE3OW7O2myEd3WjxLZZMqmcWT8Tn3xmrdZteEyj_0wc",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "test@test.com"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
