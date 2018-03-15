@@ -2,10 +2,7 @@ package com.palebluedotstardust.controller;
 
 import com.palebluedotstardust.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.palebluedotstardust.service.UserService;
 
@@ -21,8 +18,11 @@ public class SecureController {
 		return "Login Successful!";
 	}
 
-	@RequestMapping(value = "/user/email", method = RequestMethod.POST)
-	public User findByEmail(@RequestBody String email) {
+	@RequestMapping(value = "/user/email/{email:.+}", method = RequestMethod.POST)
+	public User findByEmail(@PathVariable("email") String email) {
+
+		System.out.println(email);
+
 		return userService.findByEmail(email);
 	}
 

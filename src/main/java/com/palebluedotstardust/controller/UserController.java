@@ -1,5 +1,6 @@
 package com.palebluedotstardust.controller;
 
+import java.time.*;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -54,8 +55,28 @@ public class UserController {
 			throw new ServletException("Invalid login. Please check your name and password.");
 		}
 
-		jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
-				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+
+		LocalDateTime ldt = LocalDateTime.now(Clock.systemUTC());
+		Instant creatation = ldt.toInstant(ZoneOffset.UTC);
+		Date jwtCreation = Date.from(creatation);
+
+		ldt.plusSeconds(240);
+
+		Instant instant = ldt.toInstant(ZoneOffset.UTC);
+		Date expirationDate = Date.from(instant);
+
+
+		System.out.println(jwtCreation);
+		System.out.println(expirationDate);
+		LocalDateTime currentTime = LocalDateTime.now();
+
+		jwtToken = Jwts.builder().setSubject(email).claim("roles", "user")
+				.setExpiration(Date.from(currentTime
+						.plusMinutes(2)
+						.atZone(ZoneId.systemDefault()).toInstant()))
+				.setIssuedAt(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
+				.signWith(SignatureAlgorithm.HS256, "secretkey")
+				.compact();
 
 		return jwtToken;
 	}
