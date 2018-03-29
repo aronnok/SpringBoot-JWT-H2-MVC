@@ -14,7 +14,7 @@ spring:
          ddl-auto: update
        properties:
          hibernate:
-           show_sql: true
+           show_sql: false
            use_sql_comments: true
            format_sql: true
 
@@ -42,3 +42,11 @@ spring:
 #spring.datasource.password=
 
 #spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+#Logging configs for application and spring boot logs
+logging:
+  level:
+    root: INFO
+    org.mcss.samobile: DEBUG
+  pattern:
+    console: "%date{ISO8601} |authentication-ms| %thread |%-5level| %file:%line %M | %msg %n"
+    file: "%date{ISO8601} %-5level [%thread] [%file:%line %M] - %msg %n"

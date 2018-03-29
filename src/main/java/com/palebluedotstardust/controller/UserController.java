@@ -1,12 +1,17 @@
 package com.palebluedotstardust.controller;
 
+import java.net.URI;
 import java.time.*;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
+import javax.xml.ws.Response;
 
 import com.palebluedotstardust.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +22,7 @@ import com.palebluedotstardust.service.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @CrossOrigin(origins = "http://localhost", maxAge = 3600)
 @RestController
@@ -32,9 +38,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestBody User login) throws ServletException {
+	public ResponseEntity login(@RequestBody User login) throws ServletException {
 
 		String jwtToken = "";
+        HashMap<String,String> responseMap = new HashMap<>();
 
 		if (login.getEmail() == null || login.getPassword() == null) {
 			throw new ServletException("Please fill in username and password");
@@ -55,19 +62,6 @@ public class UserController {
 			throw new ServletException("Invalid login. Please check your name and password.");
 		}
 
-
-		LocalDateTime ldt = LocalDateTime.now(Clock.systemUTC());
-		Instant creatation = ldt.toInstant(ZoneOffset.UTC);
-		Date jwtCreation = Date.from(creatation);
-
-		ldt.plusSeconds(240);
-
-		Instant instant = ldt.toInstant(ZoneOffset.UTC);
-		Date expirationDate = Date.from(instant);
-
-
-		System.out.println(jwtCreation);
-		System.out.println(expirationDate);
 		LocalDateTime currentTime = LocalDateTime.now();
 
 		jwtToken = Jwts.builder().setSubject(email).claim("roles", "user")
@@ -78,6 +72,13 @@ public class UserController {
 				.signWith(SignatureAlgorithm.HS256, "secretkey")
 				.compact();
 
-		return jwtToken;
+
+        responseMap.put("token",jwtToken);
+        responseMap.put("expirationTime","120");
+        ResponseEntity<HashMap> responseEntity = new ResponseEntity<>(responseMap,
+                HttpStatus.OK);
+
+        return responseEntity;
+        
 	}
 }
